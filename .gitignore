@@ -1,3 +1,7 @@
-*.RData
+*.RData*
+.Rhistory
 *.rdata
 *.txt
+*.csv
+__pycache__
+Plots/
