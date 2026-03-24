@@ -21,7 +21,8 @@ Each component corresponds to a different stage of the analysis pipeline.
 │  
 ├── NN/  
 │   └── RData_to_paq.R  
-│   └── RData_to_paq.R  
+│   └── CNN.py  
+│   └── CNN_results.py  
 │  
 ├── .gitignore  
 └── README.md  
