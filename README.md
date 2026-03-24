@@ -13,17 +13,18 @@ Each component corresponds to a different stage of the analysis pipeline.
 
 ## 📂 Repository Structure
 
-├── Exploratory Analysis/
-│   └── Exploratory analysis.R
-│
-├── GLM/
-│   └── BSL, DELAY & SENS subject model.R
-│
-├── NN/
-│   └── (empty for now — NN models will be added here)
-│
-├── .gitignore
-└── README.md
+├── Exploratory Analysis/  
+│   └── Exploratory analysis.R  
+│  
+├── GLM/  
+│   └── BSL, DELAY & SENS subject model.R  
+│  
+├── NN/  
+│   └── RData_to_paq.R  
+│   └── RData_to_paq.R  
+│  
+├── .gitignore  
+└── README.md  
 
 
 ---
