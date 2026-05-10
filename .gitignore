@@ -4,11 +4,12 @@
 *.txt
 *.parquet
 *.csv
+*.json
 __pycache__
 Plots/
 .venv
 .vscode
-.json
+
 torch-env/
 NN/results
 CNN 2.py
