@@ -38,7 +38,6 @@ def reshape_per_subject(df, expected_channels=64):
 
         trial_data = group[eeg_cols].to_numpy(dtype=np.float32)  # (channels, time)
 
-        # ✅ NORMALIZATION (per channel, per trial)
         mean = trial_data.mean(axis=1, keepdims=True)
         std = trial_data.std(axis=1, keepdims=True) + 1e-5
         trial_data = (trial_data - mean) / std
@@ -70,25 +69,22 @@ class CNN(nn.Module):
     def __init__(self, n_channels=64, n_classes=3, dropout=0.6):
         super().__init__()
 
-        # Temporal filtering (interpretable)
-        self.temporal = nn.Conv1d(n_channels, 16, kernel_size=25,
+        self.temporal = nn.Conv1d(n_channels, 8, kernel_size=25,
             padding=12, bias=False)
-        self.bn1 = nn.BatchNorm1d(16)
+        self.bn1 = nn.BatchNorm1d(8)
 
-        # Spatial filtering (channel mixing)
-        self.spatial = nn.Conv1d(16, 32,
+        self.spatial = nn.Conv1d(8, 16,
             kernel_size=1, bias=False)
-        self.bn2 = nn.BatchNorm1d(32)
+        self.bn2 = nn.BatchNorm1d(16)
 
-        # Feature extraction
-        self.conv = nn.Conv1d(32, 64,
+        self.conv = nn.Conv1d(16, 32,
             kernel_size=7, padding=3)
-        self.bn3 = nn.BatchNorm1d(64)
+        self.bn3 = nn.BatchNorm1d(32)
 
         self.dropout = nn.Dropout(dropout)
         self.pool = nn.AdaptiveAvgPool1d(1)
 
-        self.fc = nn.Linear(64, n_classes)
+        self.fc = nn.Linear(32, n_classes)
 
     def forward(self, x):
         x = F.relu(self.bn1(self.temporal(x)))

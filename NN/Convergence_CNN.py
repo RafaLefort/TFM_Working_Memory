@@ -1,20 +1,21 @@
-import pickle
+import json
 import numpy as np
 import matplotlib.pyplot as plt
 import os
 
 # =========================
-# LOAD RESULTS
+# LOAD RESULTS (JSON)
 # =========================
 
-with open("NN/results/results_bsl.pkl", "rb") as f:
-    results_bsl = pickle.load(f)
+with open("results_tuned/results_bsl.json", "r") as f:
+    results_bsl = json.load(f)
 
-with open("NN/results/results_sens.pkl", "rb") as f:
-    results_sens = pickle.load(f)
+with open("results_tuned/results_sens.json", "r") as f:
+    results_sens = json.load(f)
 
-with open("NN/results/results_delay.pkl", "rb") as f:
-    results_delay = pickle.load(f)
+with open("results_tuned/results_delay.json", "r") as f:
+    results_delay = json.load(f)
+
 
 # =========================
 # AVERAGE LOSSES
@@ -38,12 +39,14 @@ def average_losses(train_losses, val_losses):
 
     return train_avg, val_avg
 
+
 # =========================
 # PLOT GRID FUNCTION
 # =========================
 
 def plot_period(results, name):
-    save_dir = "NN/results/plots"
+
+    save_dir = "results_tuned/plots"
     os.makedirs(save_dir, exist_ok=True)
 
     subjects = sorted(results.keys())
@@ -53,6 +56,7 @@ def plot_period(results, name):
     fig.suptitle(f"{name} - Convergence across subjects", fontsize=16)
 
     for idx, subj in enumerate(subjects):
+
         row = idx // 4
         col = idx % 4
 
@@ -69,23 +73,19 @@ def plot_period(results, name):
         ax.set_title(f"Subject {subj}", fontsize=8)
         ax.grid()
 
-        # ✅ Y-axis only on left of each row
         if col == 0:
             ax.set_ylabel("Loss")
         else:
             ax.set_yticklabels([])
 
-        # ✅ X-axis: only last row shows ticks + label
         if row == 4:
             ax.set_xlabel("Epoch")
             ax.tick_params(axis='x', labelsize=7)
         else:
             ax.set_xticklabels([])
 
-        # Optional: smaller ticks everywhere
         ax.tick_params(axis='y', labelsize=7)
 
-    # Shared legend
     handles, labels = axes[0, 0].get_legend_handles_labels()
     fig.legend(handles, labels, loc="upper right")
 
@@ -93,6 +93,7 @@ def plot_period(results, name):
 
     plt.savefig(f"{save_dir}/convergence_{name}_grid.png", dpi=300)
     plt.close()
+
 
 # =========================
 # RUN

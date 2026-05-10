@@ -10,7 +10,7 @@ import pandas as pd
 # Load data
 # =========================
 
-with open("NN/results/results_bsl.pkl", "rb") as f:
+with open("NN/results tuned/results_bsl.pkl", "rb") as f:
     results_bsl = pickle.load(f)
 
 with open("NN/results/results_sens.pkl", "rb") as f:
